@@ -10,7 +10,8 @@ def plot_bar(
     rotate_xticks=45,
     y_lim=1.1,
     show_values=True,
-    sort=True,
+    sort=False,
+    color=None,
 ):
     """
     Plot a generic categorical bar chart.
@@ -21,10 +22,11 @@ def plot_bar(
         figsize (tuple): figure size in inches
         xlabel (str)
         ylabel (str)
-        rotate_xticks (int): rotation angle for x tick labels
+        rotate_xticks (int)
         y_lim (float): y-axis limit multiplier
-        show_values (bool): whether to show value labels on bars
-        sort (bool): whether to sort bars by value (descending)
+        show_values (bool)
+        sort (bool)
+        color (str or None): bar color
     """
 
     if sort:
@@ -35,12 +37,11 @@ def plot_bar(
     categories, values = zip(*items)
 
     fig, ax = plt.subplots(figsize=figsize)
-    bars = ax.bar(categories, values)
+
+    bars = ax.bar(categories, values, color=color)
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-
-    # 关键：ylim 一定要设在 ax 上
     ax.set_ylim(0, max(values) * y_lim)
 
     if rotate_xticks:
@@ -55,3 +56,4 @@ def plot_bar(
         save_fig(save_path)
 
     plt.close()
+
