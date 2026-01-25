@@ -1,6 +1,8 @@
+
 # 科研绘图库
 ## 结构总览
 research-plot-utils/
+
 ├── style.py          # 全局风格
 
 ├── colors.py         # 常用颜色
@@ -8,6 +10,8 @@ research-plot-utils/
 ├── bar.py            # 常用 bar 图
 
 ├── histogram.py       # 常用 histogram 图
+
+├── sunburst.py         # 双层扇面图
 
 ├── line.py           # 常用折线
 

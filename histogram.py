@@ -42,6 +42,8 @@ def plot_duration_histogram(
         color=color,
     )
 
+
+
     # --- medium line ---
     if show_medium:
         if medium_type == "mean":
@@ -56,6 +58,9 @@ def plot_duration_histogram(
             color="black",
             alpha=0.8,
         )
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel("Density" if density else ylabel)

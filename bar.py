@@ -38,11 +38,20 @@ def plot_bar(
 
     fig, ax = plt.subplots(figsize=figsize)
 
-    bars = ax.bar(categories, values, color=color)
+    bars = ax.bar(categories, values, color=color, edgecolor='none', linewidth=0)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
-    ax.set_ylim(0, max(values) * y_lim)
+
+    # 补丁级别，添加适应指定上下限
+    # ax.set_ylim(0, max(values) * y_lim)
+    if isinstance(y_lim, (tuple, list)):
+        ax.set_ylim(y_lim)
+    else:
+        ax.set_ylim(0, max(values) * y_lim)
 
     if rotate_xticks:
         ax.set_xticklabels(categories, rotation=rotate_xticks, ha="right")
