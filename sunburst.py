@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as mcolors
 from save import save_fig
+from color_utils import interleave_order
 
 # amount=0: 原色, amount=1: 白色
 def lighten(color, amount):
@@ -26,16 +27,17 @@ def plot_genre_subgenre_sunburst(
     genre_data,
     subgenre_data,
     save_path=None,
-    figsize=(5.4, 5.4),
+    figsize=(6, 6),
     inner_radius=0.47,
     outer_radius=1.0,
     # ===== color control =====
     inner_color_range=(0.1, 1),
     outer_lighten=0.25,
     shuffle_genre_colors=True,
+    genre_color_order=None,  # e.g. [6, 0, 7, 1, 8, 2, ...]
     random_seed=42,
     # ===== text control =====
-    inner_fontsize_base=7,
+    inner_fontsize_base=8,
     outer_fontsize_base=8,
 ):
 
@@ -54,12 +56,25 @@ def plot_genre_subgenre_sunburst(
     )
 
     # 颜色、genre、数值三者同步重排
+    # if shuffle_genre_colors:
+    #     rng = np.random.default_rng(random_seed)
+    #     order = rng.permutation(len(genres))
+    #     base_colors = base_colors[order]
+    #     genres = [genres[i] for i in order]
+    #     genre_sizes = genre_sizes[order]
+    
+    # from color_utils import interleave_order
+
+    # 最大色差重排，提升可读性（论文标准）
     if shuffle_genre_colors:
-        rng = np.random.default_rng(random_seed)
-        order = rng.permutation(len(genres))
+        if genre_color_order is not None:
+            order = np.array(genre_color_order)
+        else:
+            order = interleave_order(len(genres), mode="high_low")
+
         base_colors = base_colors[order]
-        genres = [genres[i] for i in order]
-        genre_sizes = genre_sizes[order]
+        # genres = [genres[i] for i in order]
+        # genre_sizes = genre_sizes[order]
 
     # ===== inner ring =====
     wedges_inner, _ = ax.pie(
@@ -141,9 +156,9 @@ def plot_genre_subgenre_sunburst(
         print(f"{sub}: {pct:.1f}%")
 
         if pct < 5 and pct > 2:
-            outer_fontsize = outer_fontsize_base - 1
+            outer_fontsize = outer_fontsize_base - 0
         elif pct <= 2:
-            outer_fontsize = outer_fontsize_base - 3 
+            outer_fontsize = outer_fontsize_base - 1 
         else:
             outer_fontsize = outer_fontsize_base
 

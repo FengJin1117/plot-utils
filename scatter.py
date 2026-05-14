@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from save import save_fig
 
 
 def plot_rank_scatter(
@@ -69,6 +70,6 @@ def plot_rank_scatter(
     plt.tight_layout()
 
     if save_path is not None:
-        plt.savefig(save_path, format="pdf", bbox_inches="tight")
+        save_fig(save_path)
 
     plt.close()

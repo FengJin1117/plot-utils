@@ -1,0 +1,7 @@
+# 图片
+
+figs/
+
+# 不要python编译文件
+__pycache__/
+*.pyc
